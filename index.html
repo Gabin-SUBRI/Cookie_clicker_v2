@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cookie Clicker JS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>🎮 Cookie Clicker</h1>
+    <button id="cookie-btn">🍪 Clique pour un cookie !</button>
+    <p id="cookie-counter">Cookies : 0</p>
+
+    <button id="shop-btn">🛒 Ouvrir la boutique</button>
+    <div id="shop" class="hidden">
+      <h2>🏪 Boutique</h2>
+      <button data-type="click" id="upgrade-click">
+        Amélioration de click (+1) - <span id="price-click">50</span> cookies
+        (Acheté : <span id="count-click">0</span> fois)
+      </button>
+      <button data-type="multiplier" id="upgrade-multiplier">
+        Amélioration de click (*2) -
+        <span id="price-multiplier">200</span> cookies (Acheté :
+        <span id="count-multiplier">0</span> fois)
+      </button>
+      <button data-type="bonus" id="upgrade-bonus">
+        Chance de cookie bonus - <span id="price-bonus">1000</span> cookies
+        (Acheté : <span id="count-bonus">0</span> fois)
+      </button>
+      <button data-type="bonus-amount" id="upgrade-bonus-amount">
+        Quantité de cookies bonus -
+        <span id="price-bonus-amount">2000</span> cookies (Acheté :
+        <span id="count-bonus-amount">0</span> fois)
+      </button>
+      <button id="close-shop">❌ Fermer</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
