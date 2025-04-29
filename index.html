@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div id="alert-message" class="hidden">❌ Pas assez de cookies !</div>
+    <div id="bonus-message" class="hidden">🍪 Cookies bonus x1 !!</div>
+
     <h1>🎮 Cookie Clicker</h1>
     <button id="cookie-btn">🍪 Clique pour un cookie !</button>
     <p id="cookie-counter">Cookies : 0</p>
@@ -32,6 +35,12 @@
         <span id="count-bonus-amount">0</span> fois)
       </button>
       <button id="close-shop">❌ Fermer</button>
+    </div>
+    <div id="victory-screen" class="hidden">
+      <h1>🎉 Félicitations ! 🎉</h1>
+      <p>Tu as atteint l'objectif !</p>
+      <br />
+      <button id="replay-btn">🔄 Rejouer</button>
     </div>
 
     <script src="script.js"></script>

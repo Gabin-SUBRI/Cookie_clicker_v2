@@ -13,8 +13,20 @@ const counterDisplay = document.getElementById("cookie-counter");
 const shopBtn = document.getElementById("shop-btn");
 const shop = document.getElementById("shop");
 const closeShop = document.getElementById("close-shop");
+const alertMessage = document.getElementById("alert-message");
+const bonusMessage = document.getElementById("bonus-message");
 
-// Fonction pour mettre à jour les affichages des prix et achats dans la boutique
+// Fonction pour afficher les messages d'alerte
+function showMessage(element, message) {
+  element.textContent = message;
+  element.classList.add("visible");
+
+  setTimeout(() => {
+    element.classList.remove("visible");
+  }, 2000);
+}
+
+// Fonction pour mettre à jour les affichages des prix et achats
 function updateShopDisplay() {
   const upgrades = [
     {
@@ -54,15 +66,25 @@ function updateShopDisplay() {
 cookieBtn.addEventListener("click", () => {
   if (Math.random() * 100 <= achatAjoute3) {
     compteur += amelio * (achatAjoute4 + 1);
-    alert(`🍪 Cookies bonus x${achatAjoute4 + 1} !!`);
+    showMessage(bonusMessage, `🍪 Cookies bonus x${achatAjoute4 + 1} !!`);
   }
+
   compteur += amelio;
   counterDisplay.textContent = `Cookies : ${compteur}`;
 
   if (compteur >= objectif) {
-    alert(
-      "🎉 Félicitations ! Tu as atteint l'objectif de 1 000 000 000 cookies !"
-    );
+    function showVictoryScreen() {
+      document.getElementById("victory-screen").classList.remove("hidden");
+
+      setTimeout(() => {
+        document.getElementById("victory-screen").classList.add("hidden"); // Cache après 5 sec
+      }, 5000);
+    }
+
+    // Modification de la condition de victoire
+    if (compteur >= objectif) {
+      showVictoryScreen(); // Affiche l'écran de victoire
+    }
   }
 });
 
@@ -70,7 +92,7 @@ cookieBtn.addEventListener("click", () => {
 shopBtn.addEventListener("click", () => shop.classList.toggle("hidden"));
 closeShop.addEventListener("click", () => shop.classList.add("hidden"));
 
-// Gestion des améliorations en boutique
+// Gestion des améliorations
 document.querySelectorAll("#shop button[data-type]").forEach((button) => {
   button.addEventListener("click", () => {
     let type = button.getAttribute("data-type");
@@ -103,10 +125,9 @@ document.querySelectorAll("#shop button[data-type]").forEach((button) => {
       upgrades[type].action();
       upgrades[type].level();
     } else {
-      alert("❌ Pas assez de cookies !");
+      showMessage(alertMessage, "❌ Pas assez de cookies !");
     }
 
-    // Mise à jour des prix et du nombre d’achats
     updateShopDisplay();
     counterDisplay.textContent = `Cookies : ${compteur}`;
   });
@@ -115,8 +136,36 @@ document.querySelectorAll("#shop button[data-type]").forEach((button) => {
 // Mise à jour initiale de la boutique
 updateShopDisplay();
 
-// Ajoute un écouteur d'événement pour fermer la boutique
-closeShop.addEventListener("click", () => {
-  console.log("Boutique fermé !");
-  document.getElementById("shop").classList.add("hidden"); // Ajoute la classe "hidden"
+function updateBackground() {
+  let progression = Math.min(compteur / objectif, 1); // Valeur entre 0 et 1
+
+  let r = Math.round(255 - progression * (255 - 139)); // Transition du blanc vers le marron
+  let g = Math.round(248 - progression * (248 - 69));
+  let b = Math.round(220 - progression * (220 - 19));
+
+  document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+}
+
+// Appelle cette fonction à chaque mise à jour du compteur
+cookieBtn.addEventListener("click", () => {
+  compteur += amelio;
+  updateBackground(); // Met à jour la couleur du fond
+  counterDisplay.textContent = `Cookies : ${compteur}`;
+
+  if (compteur >= objectif) {
+  }
 });
+
+function showVictoryScreen() {
+  const victoryScreen = document.getElementById("victory-screen");
+  victoryScreen.classList.remove("hidden"); // Affiche l'écran de victoire
+
+  setTimeout(() => {
+    victoryScreen.classList.add("hidden"); // Cache l'écran après 5 sec
+  }, 5000);
+}
+
+// Vérifie que l'objectif est atteint
+if (compteur >= objectif) {
+  showVictoryScreen(); // Affiche l'écran de victoire
+}
